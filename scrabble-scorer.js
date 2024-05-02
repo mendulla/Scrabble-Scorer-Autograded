@@ -34,6 +34,9 @@ function oldScrabbleScorer(word) {
 
 function initialPrompt() {
    console.log("Let's play some scrabble! Enter a word:");
+   const word = input.question("Enter a word to score: ");  // Prompt user to enter a word
+   const scoreOutput = oldScrabbleScorer(word);
+   console.log(scoreOutput);  // Display the scores for each letter
 };
 
 let newPointStructure;
