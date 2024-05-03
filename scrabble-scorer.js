@@ -35,28 +35,74 @@ function oldScrabbleScorer(word) {
 function initialPrompt() {
    console.log("Let's play some scrabble! Enter a word:");
    const word = input.question("Enter a word to score: ");  // Prompt user to enter a word
-   const scoreOutput = oldScrabbleScorer(word);
-   console.log(scoreOutput);  // Display the scores for each letter
+   return word  // Display the scores for each letter
 };
+//simpleScorer function//
 
-let newPointStructure;
+function simpleScorer(word) {
+   return word.length;
+ }
 
-let simpleScorer;
+ //vowelBonusScorer function//
+function vowelBonusScorer(word) {
+   word = word.toUpperCase();
+   let score = 0;
+   for (let i = 0; i < word.length; i++) {
+     if ('AEIOU'.includes(word[i])) {
+       score += 3;
+     } else {
+       score += 1;
+     }
+   }
+   return score;
+ }
 
-let vowelBonusScorer;
+// scoringAlgorithms array //
 
-let scrabbleScorer;
+const scoringAlgorithms = [
+   {
+     name: "Simple Score",
+     description: "Each letter is worth 1 point.",
+     scoringFunction: simpleScorer
+   },
+   {
+     name: "Bonus Vowels",
+     description: "Vowels are worth 3 pts, consonants are worth 1 pt.",
+     scoringFunction: vowelBonusScorer
+   },
+   {
+     name: "Scrabble",
+     description: "Uses the old Scrabble scoring system.",
+     scoringFunction: oldScrabbleScorer
+   }
+ ];
 
-const scoringAlgorithms = [];
-
-function scorerPrompt() {}
+ // scorerPrompt function //
+function scorerPrompt() {
+   console.log("Which scoring algorithm would you like to use?\n");
+   console.log("0 - Simple: One point per character");
+   console.log("1 - Bonus Vowels: Vowels are worth 3 points, consonants are worth 1 point");
+   console.log("2 - Scrabble: Uses the old Scrabble scoring system");
+   let choice = input.question("Enter 0, 1, or 2: ");
+   return scoringAlgorithms[choice];
+}
 
 function transform() {};
 
+let newPointStructure; 
+
+let scrabbleScorer; //this is going to be a function
+
+// runProgram function //
+
 function runProgram() {
-   initialPrompt();
-   
+  //initialPrompt();
+  let word = initialPrompt();
+  const scorerObject = scorerPrompt();
+  //const word = input.question("Enter a word to score: ");
+ console.log(`Score for '${word}': ${scorerObject.scoringFunction(word)}`);
 }
+
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
