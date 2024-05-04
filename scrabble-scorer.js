@@ -13,14 +13,17 @@ const oldPointStructure = {
 };
 
 function transform(oldStructure) {
-    let newStructure = {};
-    for (const pointValue in oldStructure) {
-        oldStructure[pointValue].forEach(letter => {
-            newStructure[letter.toLowerCase()] = Number(pointValue);
-        });
-    }
-    return newStructure;
+   let newStructure = {};
+   for (const pointValue in oldStructure) {
+       const letters = oldStructure[pointValue];
+       for (let i = 0; i < letters.length; i++) {
+           const letter = letters[i];
+           newStructure[letter.toLowerCase()] = Number(pointValue);
+       }
+   }
+   return newStructure;
 }
+
 
 let newPointStructure = transform(oldPointStructure);
 
@@ -65,7 +68,7 @@ function scrabbleScorer(word) {
     word = word.toLowerCase();
     let score = 0;
     for (let letter of word) {
-        score += newPointStructure[letter] || 0;
+        score += newPointStructure[letter];
     }
     return score;
 }
